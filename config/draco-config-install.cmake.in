@@ -1,0 +1,106 @@
+#-----------------------------*-cmake-*----------------------------------------#
+# file   config/draco-config-install.cmake.in
+# author Kelly Thompson <kgt@lanl.gov>
+# date   2012 Aug 1
+# brief  Save Draco configuration information for installation (cmake export)
+# note   Copyright (C) 2016-2019, Triad National Security, LLC.
+#        All rights reserved.
+#------------------------------------------------------------------------------#
+list( APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}" )
+get_filename_component( _SELF_DIR "${CMAKE_CURRENT_LIST_FILE}"  PATH )
+include( "${_SELF_DIR}/draco-targets.cmake" )
+
+# Setup for GNUtoMS (see 'cmake --help-property GNUtoMS')
+@DRACO_GNUtoMS_INSTALL@
+
+# Also set the draco install dir
+set( DRACO_CONFIG_DIR "${_SELF_DIR}" )
+set( DRACO_CONFIGURATION_TYPES "@DRACO_CONFIGURATION_TYPES@" CACHE STRING
+  "Available build configurations" FORCE )
+
+# Provide some pretty print information during configure
+include( FeatureSummary )
+set_package_properties( draco PROPERTIES
+   URL "https://rtt.lanl.gov/redmine/projects/draco"
+   DESCRIPTION
+"Draco is a comprehensive, radiation transport framework that provides key,
+   reusable components for serial and parallel computational physics
+   codes."
+   TYPE REQUIRED
+   PURPOSE
+"Provides underlying capabilities required by Capsaicin and Jayenne (smart
+   pointers, data access, random number generators, etc.)"
+   )
+
+## ---------------------------------------------------------------------------
+## Compilers used by Draco build (also: see ds++/config.h)
+## ---------------------------------------------------------------------------
+
+set( DRACO_LIBRARY_TYPE @DRACO_LIBRARY_TYPE@ )
+set( GCC_ENABLE_GLIBCXX_DEBUG "@GCC_ENABLE_GLIBCXX_DEBUG@" )
+set( CRAY_PE "@CRAY_PE@" )
+
+## ---------------------------------------------------------------------------
+## Set library specifications and paths
+## ---------------------------------------------------------------------------
+
+## The project version number
+set(Draco_VERSION "@Draco_VERSION@")
+
+## The project libraries.
+set(Draco_LIBRARIES "@Draco_LIBRARIES@" )
+
+## The project tpl include paths
+set(Draco_TPL_INCLUDE_DIRS "@Draco_TPL_INCLUDE_DIRS@" )
+
+## The project tpl libraries
+set(Draco_TPL_LIBRARIES "@Draco_TPL_LIBRARIES@" )
+
+## The project's exported executables
+set( Draco_EXECUTABLES "@Draco_EXECUTABLES@" )
+
+## ---------------------------------------------------------------------------
+## MPI specific variables
+##   These variables are provided to make it easier to get the mpi libraries
+##   and includes on systems that do not use the mpi wrappers for compiling
+## ---------------------------------------------------------------------------
+
+set(DRACO_C4 "@DRACO_C4@" )
+set(Draco_MPIEXEC_EXECUTABLE "@MPIEXEC_EXECUTABLE@")
+set(Draco_MPIEXEC_MAX_NUMPROCS "@MPIEXEC_MAX_NUMPROCS@")
+set(Draco_MPIEXEC_NUMPROC_FLAG "@MPIEXEC_NUMPROC_FLAG@")
+set(Draco_MPI_C_WORKS "@MPI_C_WORKS@") # Used to help CAFS setup on Win32
+
+# CUDA
+set( HAVE_CUDA "@HAVE_CUDA@" )
+set( USE_CUDA "@USE_CUDA@" )
+set( COMPILE_WITH_CUDA "@COMPILE_WITH_CUDA@" )
+set( CUDA_DBS_STRING "@CUDA_DBS_STRING@")
+set( Draco_CMAKE_CUDA_FLAGS "@CMAKE_CUDA_FLAGS@")
+set( Draco_CMAKE_CUDA_FLAGS_DEBUG "@CMAKE_CUDA_FLAGS_DEBUG@")
+set( Draco_CMAKE_CUDA_FLAGS_RELWITHDEBINFO "@CMAKE_CUDA_FLAGS_RELWITHDEBINFO@")
+set( Draco_CMAKE_CUDA_FLAGS_RELEASE "@CMAKE_CUDA_FLAGS_RELEASE@")
+set( Draco_CUDA_ARCH "@Draco_CUDA_ARCH@")
+
+# Python
+set( Python_Interpreter_FOUND "@Python_Interpreter_FOUND@" )
+set( Python_EXECUTABLE "@Python_EXECUTABLE@" )
+
+## ---------------------------------------------------------------------------
+## Set useful general variables
+## ---------------------------------------------------------------------------
+
+## Draco vendor's for this machine
+set(VENDOR_DIR "@VENDOR_DIR@")
+
+## The packages enabled for this project
+set(Draco_PACKAGE_LIST "@Draco_PACKAGE_LIST@" )
+
+## The TPLs enabled for this project
+set(Draco_TPL_LIST "@Draco_TPL_LIST@")
+
+## ---------------------------------------------------------------------------
+## Save per target properties for importing into other projects.
+## ---------------------------------------------------------------------------
+
+@Draco_EXPORT_TARGET_PROPERTIES@

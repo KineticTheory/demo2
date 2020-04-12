@@ -1,0 +1,16 @@
+*.elc
+*.pyc
+*~
+.settings/
+build*/
+.*.sw[a-p]
+.nfs*
+CMakeSettings.json
+GPATH
+GRTAGS
+GTAGS
+TAGS
+.vs
+# Ignore IDE files
+*sublime-project
+*sublime-workspace
